@@ -1,0 +1,418 @@
+    <script src="js/app.js"></script>
+    <!-- ===================== PANEL: SUBTITULO ====================== -->
+      <div class="row mb-3">
+          <h3 class="text-center" style="text-shadow: 0.04em 0.04em 0.12em gray">Gestión De Institución</h3>
+      </div>
+
+    <!-- ===================== PANEL: FORMULARIO ===================== -->
+    <main>
+      <form class="was-validated" accept-charset="utf-8" id="formulario">
+        <div class="row g-3">
+  
+          <div class="col-md-3">
+            <label for="razon_social" class="form-label">Razón Social</label>
+            <input type="text" class="form-control form-control-sm" name="razon_social" id="razon_social" maxlength="30" required>
+          </div>
+                
+          <div class="col-md-2">
+            <label for="cuit" class="form-label">C.U.I.T</label>
+            <input type="number" class="form-control form-control-sm" name="cuit" id="cuit" minlength="11" maxlength="11" required>
+          </div>
+
+          <div class="col-md-2">
+            <label for="responsable_tipo" class="form-label">responsable_tipo</label>
+            <select class="form-select form-select-sm" name="responsable_tipo" id="responsable_tipo" required>
+              <option value="MONOTRIBUTISTA SOCIAL">MONOTRIBUTISTA SOCIAL</option>
+              <option selected value="RESPONSABLE INSCRIPTO">RESPONSABLE INSCRIPTO</option>
+              <option value="RESPONSABLE MONOTRIBUTO">RESPONSABLE MONOTRIBUTO</option>
+              <option value="SUJETO EXENTO">SUJETO EXENTO</option>
+              <option value="SUJETO NO CATEGORIZADO">SUJETO NO CATEGORIZADO</option>
+            </select>
+          </div>
+
+          <div class="col-md-5 col-lg-4">
+            <label for="fecha_contrato_social" class="form-label">Contrato Social</label>
+            <input type="date" class="form-control form-control-sm" name="fecha_contrato_social" id="fecha_contrato_social" value="2021-06-01" required>
+          </div>
+
+          <div class="col-md-3">
+            <label for="registro_conabip" class="form-label">Registro CONABIP</label>
+            <input type="number" class="form-control form-control-sm" name="registro_conabip" id="registro_conabip" maxlength="4" required>
+          </div>
+
+          <div class="col-md-7 col-lg-8">
+            <label for="correo_electronico" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control form-control-sm" name="correo_electronico" id="correo_electronico" maxlength="70" required>
+          </div>
+            
+          <div class="col-md-9">
+            <label for="direccion" class="form-label">Dirección</label>
+            <input type="text" class="form-control form-control-sm" name="direccion" id="direccion" maxlength="50" required>
+          </div>
+
+          <div class="col-md-3">
+            <label for="codigo_postal" class="form-label">Código Postal</label>
+            <input type="number" class="form-control form-control-sm" name="codigo_postal" id="codigo_postal" maxlength="6" required>
+          </div>
+
+          <div class="col-md-4">
+            <label for="localidad" class="form-label">Localidad</label>
+            <input type="text" class="form-control form-control-sm" name="localidad" id="localidad" maxlength="20" required>
+          </div>
+
+          <div class="col-md-4">
+            <label for="provincia" class="form-label">Provincia</label>
+            <input type="text" class="form-control form-control-sm" name="provincia" id="provincia" maxlength="20" required>
+          </div>
+
+          <div class="col-md-4">
+            <label for="pais_id" class="form-label">País</label>
+            <select class="form-select form-select-sm" id="pais_id" required>
+              <option selected value="1">ARGENTINA</option>
+              <option value="2">BOLIVIA</option>
+              <option value="3">BRASIL</option>
+              <option value="4">CHILE</option>
+              <option value="5">COLOMBIA</option>
+              <option value="6">COSTA RICA</option>
+              <option value="7">CUBA</option>
+              <option value="8">ECUADOR</option>
+              <option value="9">EL SALVADOR</option>
+              <option value="10">GUATEMALA</option>
+              <option value="11">HAITÍ</option>
+              <option value="12">HONDURAS</option>
+              <option value="13">MÉXICO</option>
+              <option value="14">NICARAGUA</option>
+              <option value="15">PANAMÁ</option>
+              <option value="16">PARAGUAY</option>
+              <option value="17">PERÚ</option>
+              <option value="18">URUGUAY</option>
+              <option value="19">VENEZUELA</option>
+            </select>
+          </div>
+
+          <!-- ============= TABLA ============= -->
+          <div class="col-md-12 my-2">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="col">#</th>
+                    <th class="col">Teléfono</th>
+                    <th class="col">Prefijo</th>
+                    <th class="col">Número</th>
+                    <th class="col"><div class="d-grid ps-md-2 pe-md-4"><button type="button" class="btn btn-sm btn-outline-primary" id="btn_agregar_telefono">Agregar</button></div></th>
+                  </tr>
+                </thead>
+                <tbody id="contenidoTablaTelefono"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ============ BOTONES ============ -->
+          <div class="col-md-12">
+            <div class="row mt-3">
+              <div class="col-md-3 offset-md-2 col-lg-2 offset-lg-3 my-1"><div class="d-grid gap-2"><button type="button" class="btn btn-sm btn-outline-primary" id="btn_nuevo_institucion">Nuevo Institucion</button></div></div>
+              <div class="col-md-2 col-lg-2 my-1"><div class="d-grid gap-2"><button type="submit" class="btn btn-sm btn-dark" id="btn_guardar_institucion">Guardar</button></div></div>
+              <div class="col-md-3 col-lg-2 my-1"><div class="d-grid gap-2"><button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#listadoModal" id="btn_buscar_institucion">Buscar Institucion</button></div></div>
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </main>
+
+    <!-- ==================== PANEL: LISTADO MODAL =================== -->
+    <div class="modal fade" id="listadoModal" tabindex="-1" aria-labelledby="listadoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="listadoModalLabel">Listado De Institucions</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- ========= BOTONES MODAL ========= -->
+            <div class="row">
+              <div class="col-md-4  my-1"><div class="d-grid gap-2"><input type="text" class="form-control form-control-sm" id="valor_lista_modal"></div></div>
+              <div class="col-md-5  my-1"><div class="d-grid gap-2">
+                <select class="form-select form-select-sm" id="filtro_tabla-modal">
+                  <option value="id">ID Institución</option>
+                  <option selected value="razon_social">Razón Social</option>
+                </select>
+              </div></div>
+              <div class="col-md-3  my-1"><div class="d-grid gap-2"><button type="button" class="btn btn-sm btn-primary" id="btn_filtrar_tabla_modal">Buscar</button></div></div>
+            </div>
+            <!-- ========== TABLA MODAL =========== -->
+            <div class="col-md-12 my-2">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="col">#</th>
+                      <th class="col">Razon Social</th>
+                      <th class="col">Cuit</th>
+                      <th class="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="contenidoTablaModal"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="col-12">
+              <div class="col-4 offset-4 my-1"><div class="d-grid gap-2"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+        
+      var mensajeDeRespuesta; 
+      var operacion = "insertar";
+      var institucion_id_seleccionado = 999999999999999;
+      var direccion_id_seleccionada = 999999999999999;
+
+      $("#btn_nuevo_institucion").click( () => {
+        resetear('todo'); 
+      });
+
+      $("#btn_guardar_institucion").click( (e) => {
+        $("#formulario").validate({submitHandler: function(form) { 
+          let mensaje = (operacion === 'insertar') ? 'guardar el nuevo registro' : 'guardar los cambios realizados' ;
+          if (confirmarMSJ(mensaje) === true){
+            let formulario = new FormData();
+            formulario.append('id', institucion_id_seleccionado);
+            formulario.append('razon_social', $("#razon_social").val());
+            formulario.append('cuit', $("#cuit").val());
+            formulario.append('responsable_tipo', $("#responsable_tipo").val());
+            formulario.append('fecha_contrato_social', $("#fecha_contrato_social").val());
+            formulario.append('registro_conabip', $("#registro_conabip").val());
+            formulario.append('correo_electronico', $("#correo_electronico").val());
+            $.ajax({
+                method: "POST",
+                dataType: 'JSON',
+                url: '/controlador/c_institucion.php/?operacion=' + operacion,
+                data: formulario,
+                contentType: false,
+                processData: false
+            }).done( (res) => { 
+                mensajeDeRespuesta = res.mensaje;
+                institucion_id_seleccionado = res.id;
+                if (res.estado) {
+                    guardarDireccion(); //Importante: Respetar el orden en el hilo de ejecución
+                    operacion = ('actualizar'); //Importante: Respetar el orden en el hilo de ejecución
+                }
+                alert(mensajeDeRespuesta); //Importante: Respetar el orden en el hilo de ejecución
+              });
+          }
+        }});
+      });
+
+      $("#btn_buscar_institucion").click( () => {
+        $('#contenidoTablaModal').empty();
+      });
+
+      function obtenerInstitucion(id){
+          resetear('todo');
+          $.ajax({
+              method: 'GET',
+              dataType: 'JSON',
+              url: '/controlador/c_institucion.php/?operacion=obtener&id=' + id
+          }).done( (res) => { 
+              operacion = 'actualizar';
+              institucion_id_seleccionado = res.id;
+              $("#razon_social").val(res.razon_social);
+              $("#cuit").val(res.cuit);
+              $("#responsable_tipo").val(res.responsable_tipo);
+              $("#fecha_contrato_social").val(res.fecha_contrato_social);
+              $("#registro_conabip").val(res.registro_conabip);
+              $("#correo_electronico").val(res.correo_electronico);
+              listarDireccion('institucion_id',id);
+              listarTelefono('institucion_id', id); 
+          });
+      }
+
+      function guardarDireccion(){
+          $.ajax({
+              method: "POST",
+              dataType: 'JSON',
+              url: '/controlador/c_direccion.php/?operacion=' + operacion,
+              data: { 
+                  'id' : direccion_id_seleccionada,
+                  'institucion_id' : institucion_id_seleccionado,
+                  'direccion' : $("#direccion").val(),
+                  'codigo_postal' : $("#codigo_postal").val(),
+                  'localidad' : $("#localidad").val(),
+                  'provincia' : $("#provincia").val(),
+                  'pais_id' : $("#pais_id").val() }
+          }).done( (res) => {
+              direccion_id_seleccionada = res.id;
+          });
+      }
+
+      function listarDireccion(filtro, valor) {
+          resetear('direccion');
+          $.ajax({
+              method: 'GET',
+              dataType: 'JSON',
+              url: '/controlador/c_direccion.php/?operacion=listar&filtro=' + filtro + '&valor=' + valor,
+          }).done( (res) => { 
+              direccion_id_seleccionada = res[0].id;
+              $("#direccion").val(res[0].direccion);
+              $("#codigo_postal").val(res[0].codigo_postal);
+              $("#localidad").val(res[0].localidad);
+              $("#provincia").val(res[0].provincia);
+              $("#pais_id").val(res[0].pais.id);
+          });              
+      }
+
+      $("#btn_agregar_telefono").click( () => {
+          if(institucion_id_seleccionado != 999999999999999){
+              if (operacion == 'insertar' || operacion == 'actualizar') {
+                  var id_tmp = Math.floor(Math.random() * 999999999999999);
+                  $('#contenidoTablaTelefono').append( 
+                      '<tr id="' + id_tmp + '">' +
+                          '<th scope="row"><p class="text-sm-center pt-1" id="telefono_id' + id_tmp + '">N</th>' +
+                          '<td>' + 
+                              '<select class="form-select form-select-sm" id="telefono_tipo' + id_tmp + '" style="width: 160px;">' +
+                                  '<option value="TELEFONO FIJO">TELEFONO FIJO</option>' +
+                                  '<option selected value="TELEFONO MOVIL">TELEFONO MOVIL</option>' +                            '</select>' +
+                          '</td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="telefono_prefijo' + id_tmp + '" value="264" maxlength="5" required></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="telefono_numero' + id_tmp + '" value="" maxlength="9" required></td>' +
+                          '<td class="btn-group">' +
+                              '<button type="button" class="btn btn-sm btn-dark" id="btnGuardar' + id_tmp + '" onclick="guardarTelefono(\'insertar\', ' + id_tmp + ');">Guardar</button>' +
+                              '<button type="button" class="btn btn-sm btn-danger" id="btnQuitar' + id_tmp + '" onclick="quitarTelefono(' + id_tmp + ');">Quitar</button>' +
+                          '</td>' +
+                      '</tr>');
+              }
+          }else{ alert('El institucion debe estar previamente cargado en el sistema para agregar sus teléfonos.'); }
+      });
+      
+      function quitarTelefono(id){
+          if (id > 99999999999999) {
+              $('#' + id).remove();                   
+          }else{
+              if (confirmarMSJ('eliminar el registro?') === true){
+                  $.ajax({
+                      method: "POST",
+                      dataType: 'JSON',
+                      url: '/controlador/c_telefono.php/?operacion=eliminar',
+                      data: { 'id' : $("#telefono_id" + id).text(), }
+                  }).done( (res) => { 
+                      $('#' + id).remove();                   
+                      alert(res.estado);
+                  });
+              } 
+          }
+      }
+
+      function guardarTelefono(operacion, id){
+          let mensaje = (operacion === 'insertar') ? 'guardar el nuevo registro' : 'guardar los cambios realizados' ;
+          if (confirmarMSJ(mensaje) === true){
+              $.ajax({
+                  method: "POST",
+                  dataType: 'JSON',
+                  url: '/controlador/c_telefono.php/?operacion=' + operacion,
+                  data: { 
+                      'id' : id,
+                      'institucion_id' : institucion_id_seleccionado,
+                      "telefono_tipo" : $("#telefono_tipo" + id).val(),
+                      "telefono_prefijo" : $("#telefono_prefijo" + id).val(),
+                      "telefono_numero" : $("#telefono_numero" + id).val() }
+              }).done( (res) => { 
+                  mensajeDeRespuesta = res.estado;
+                  $('#' + id).attr("id", res.id);
+                  $('#telefono_id' + id).attr("id", "telefono_id" + res.id).text(res.id);
+                  $('#telefono_tipo' + id).attr("id", "telefono_tipo" + res.id);
+                  $('#telefono_prefijo' + id).attr("id", "telefono_prefijo" + res.id);
+                  $('#telefono_numero' + id).attr("id", "telefono_numero" + res.id);
+                  $('#btnGuardar' + id).attr("id", "btnGuardar" + res.id).attr("onclick", "guardarTelefono('actualizar' ," + res.id + ");");
+                  $('#btnQuitar' + id).attr("id", "btnQuitar" + res.id).attr("onclick", "quitarTelefono(" + res.id + ");");
+              }).then( ()=> {
+                  alert(mensajeDeRespuesta);
+              });
+          }
+      }
+
+      function listarTelefono(filtro, valor) {
+          resetear('telefono');
+          $.ajax({
+              method: 'GET',
+              dataType: 'JSON',
+              url: '/controlador/c_telefono.php/?operacion=listar&filtro=' + filtro + '&valor=' + valor,
+          }).done( (res) => {
+              for (let i = 0; i < res.length; i++) {
+                  $('#contenidoTablaTelefono').append( 
+                      '<tr id="' + res[i].id + '">' +
+                          '<th scope="row"><p class="text-sm-center pt-1" id="telefono_id' + res[i].id + '">' + res[i].id + '</p></th>' +
+                          '<td>' + 
+                              '<select class="form-select form-select-sm" id="telefono_tipo' + res[i].id + '" style="width: 160px;">' +
+                                  '<option ' + ((res[i].tipo ==='TELEFONO FIJO') ? "selected":"") + ' value="TELEFONO FIJO">TELEFONO FIJO</option>' +
+                                  '<option ' + ((res[i].tipo ==='TELEFONO MOVIL') ? "selected":"") + ' value="TELEFONO MOVIL">TELEFONO MOVIL</option>' +
+                              '</select>' +
+                          '</td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="telefono_prefijo' + res[i].id + '" value="' + res[i].prefijo + '" maxlength="5" required></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="telefono_numero' + res[i].id + '" value="' + res[i].numero + '" maxlength="9" required></td>' +
+                          '<td class="btn-group">' +
+                              '<button type="button" class="btn btn-sm btn-dark" id="btnGuardar' + res[i].id + '" onclick="guardarTelefono(\'actualizar\', ' + res[i].id + ');">Guardar</button>' +
+                              '<button type="button" class="btn btn-sm btn-danger" id="btnQuitar' + res[i].id + '" onclick="quitarTelefono(' + res[i].id +');">Quitar</button>' +
+                          '</td>' +
+                      '</tr>');
+              }
+          });               
+      }
+
+      function resetear(seccion){
+          if(seccion == 'institucion' || seccion == 'todo'){
+              operacion = 'insertar';
+              institucion_id_seleccionado = 999999999999999;
+              $("#razon_social").val('');
+              $("#cuit").val('');
+              $("#responsable_tipo").val('RESPONSABLE INSCRIPTO');
+              $("#fecha_contrato_social").val('2020-06-01');
+              $("#registro_conabip").val('');
+              $("#correo_electronico").val('');
+          }
+          if(seccion == 'direccion' || seccion == 'todo'){
+              direccion_id_seleccionada = 999999999999999;
+              $("#direccion").val('');
+              $("#codigo_postal").val('');
+              $("#localidad").val('');
+              $("#provincia").val('');
+              $("#pais").val('1');
+          }
+          if(seccion == 'telefono' || seccion == 'todo'){
+              $('#contenidoTablaTelefono').empty();
+          } 
+      }
+
+      function confirmarMSJ(mensaje){
+          return confirm('¿Está seguro que quiere ' + mensaje);
+      }
+      
+      $('#btn_filtrar_tabla_modal').click( (e) => {
+          $('#contenidoTablaModal').empty();
+          let filtro = $("#filtro_tabla-modal").val(), valor = $("#valor_lista_modal").val();
+          $.ajax({
+              method: 'GET',
+              dataType: 'JSON',
+              url: '/controlador/c_institucion.php/?operacion=listar&filtro=' + filtro + '&valor=' + valor,
+          }).done( (res) => {
+              for (let i = 0; i < res.length; i++) {
+                  $('#contenidoTablaModal').append( 
+                      '<tr id="' + res[i].id + '">' +
+                          '<th><p class="text-sm-center fw-light lh-1" id="filtroLista_id' + res[i].id + '">' + res[i].id + '</p></th>' +
+                          '<td><p class="text-sm-center fw-light lh-1" id="filtroLista_razon_social' + res[i].id + '">' + res[i].razon_social + '</p></td>' +
+                          '<td><p class="text-sm-center fw-light lh-1" id="filtroLista_cuit' + res[i].id + '">' + res[i].cuit + '</p></td>' +
+                          '<td class="btn-group">' +
+                              '<button type="button" class="btn btn-sm btn-dark" id="filtroLista_boton' + res[i].id + '" data-bs-dismiss="modal" onclick="obtenerInstitucion(' + res[i].id + ');">Obtener</button>' +
+                          '</td>' +
+                      '</tr>');
+              }
+          });               
+      });
+
+  </script>

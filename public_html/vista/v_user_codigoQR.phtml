@@ -1,0 +1,44 @@
+    <!-- ===================== PANEL: SUBTITULO ====================== -->
+    <div class="row mb-3">
+        <h3 class="text-center" style="text-shadow: 0.04em 0.04em 0.12em gray">Mi Código QR</h3>
+    </div>
+
+    <!-- ===================== PANEL: FORMULARIO ===================== -->
+    <main>
+        <div class="col-sm-12">
+            <div class="col-md-4 offset-md-4">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="row" id="qrcode"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="text/javascript" src="js/qrcode.min.js" ></script> <!-- Generador de códigos QR -->
+    <script type="text/javascript">
+                    
+        var usuario_id_seleccionado;
+
+        //Acción: Auto-carga las suscripciones correspondientes al usuario que accedio al sistema 
+        $.ajax({
+          method: 'GET',
+          dataType: 'JSON',
+          url: '/controlador/c_usuario.php/?operacion=obtenerSesion'
+        }).done( async (res) => {
+          usuario_id_seleccionado = await res.id;
+          await obtenerSuscripcionUltima('usuario_id_ultima_suscripcion', usuario_id_seleccionado, res.apellido + ', ' + res.nombre, res.fotografia);
+        });
+
+        function obtenerSuscripcionUltima(filtro, valor, usuario, fotografia) {
+          $.ajax({
+            method: 'GET',
+            dataType: 'JSON',
+            url: '/controlador/c_suscripcion.php/?operacion=listar&filtro=' + filtro + '&valor=' + valor,
+          }).done( (res) => {
+            if(typeof(res[0]) != "undefined") { 
+              new QRCode(document.getElementById('qrcode'), res[0].id + '-E' + res[0].estado + '-V' + res[0].fecha_vto + '-U' + usuario + '-F' + fotografia);
+            }
+          });               
+        }
+
+    </script>

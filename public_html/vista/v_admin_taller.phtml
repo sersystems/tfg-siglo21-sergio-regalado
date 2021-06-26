@@ -1,0 +1,363 @@
+    <script src="js/app.js"></script>
+    <!-- ===================== PANEL: SUBTITULO ====================== -->
+      <div class="row mb-3">
+          <h3 class="text-center" style="text-shadow: 0.04em 0.04em 0.12em gray">Gestión De Talleres</h3>
+      </div>
+
+    <!-- ===================== PANEL: FORMULARIO ===================== -->
+    <main>
+      <form class="was-validated" accept-charset="utf-8" id="formulario">
+        <div class="row g-3">
+          
+          <div class="col-md-5">
+            <label for="titulo_taller" class="form-label">Título</label>
+            <input type="text" class="form-control form-control-sm" name="titulo_taller" id="titulo_taller" maxlength="30" required>
+          </div>
+              
+          <div class="col-md-4">
+            <label for="dia_horario" class="form-label">Días & Horarios</label>
+            <input type="text" class="form-control form-control-sm" name="dia_horario" id="dia_horario" maxlength="30" required>
+          </div>
+
+          <div class="col-md-3">
+            <label for="fecha_inicio" class="form-label">F. Inicio</label>
+            <input type="date" class="form-control form-control-sm" name="fecha_inicio" id="fecha_inicio" required>
+          </div>
+
+          <div class="col-md-3">
+            <label for="fecha_cierre" class="form-label">F. Cierre</label>
+            <input type="date" class="form-control form-control-sm" name="fecha_cierre" id="fecha_cierre" required>
+          </div>
+
+          <div class="col-md-2">
+            <label for="carga_horaria" class="form-label">Carga Horaria</label>
+            <input type="number" class="form-control form-control-sm" name="carga_horaria" id="carga_horaria" value="0" readonly min="0" max="65000">
+          </div>
+
+          <div class="col-md-2">
+            <label for="cupo_max" class="form-label">Cupo Máximo</label>
+            <input type="number" class="form-control form-control-sm" name="cupo_max" id="cupo_max" min="0" max="250" required>
+          </div>
+
+          <div class="col-md-2">
+            <label for="cupo_actual" class="form-label">Cupo Actual</label>
+            <input type="number" class="form-control form-control-sm" name="cupo_actual" id="cupo_actual" value="0" readonly min="0" max="250">
+          </div>
+
+          <div class="col-md-3">
+            <label for="estado" class="form-label">Estado</label>
+            <select class="form-select form-select-sm" id="estado" required>
+              <option value="EN CURSO">EN CURSO</option>
+              <option value="FINALIZADO">FINALIZADO</option>
+              <option selected value="PENDIENTE">PENDIENTE</option>
+              <option value="SUSPENDIDO">SUSPENDIDO</option>
+            </select>
+          </div>
+
+          <!-- ============= TABLA ============= -->
+          <div class="col-md-12 my-2">
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th class="col">#</th>
+                    <th class="col">Título</th>
+                    <th class="col">Nro.</th>
+                    <th class="col">Fecha</th>
+                    <th class="col">Horario</th>
+                    <th class="col">Duración</th>
+                    <th class="col">Estado</th>
+                    <th class="col"><div class="d-grid ps-md-2 pe-md-4"><button type="button" class="btn btn-sm btn-outline-primary" id="btn_agregar_clase">Agregar</button></div></th>
+                  </tr>
+                </thead>
+                <tbody id="contenidoTablaClase"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- ============ BOTONES ============ -->
+          <div class="col-md-12">
+            <div class="row mt-3">
+              <div class="col-md-3 offset-md-2 col-lg-2 offset-lg-3 my-1"><div class="d-grid gap-2"><button type="button" class="btn btn-sm btn-outline-primary" id="btn_nuevo_taller">Nuevo Taller</button></div></div>
+              <div class="col-md-2 col-lg-2 my-1"><div class="d-grid gap-2"><button type="submit" class="btn btn-sm btn-dark" id="btn_guardar_taller">Guardar</button></div></div>
+              <div class="col-md-3 col-lg-2 my-1"><div class="d-grid gap-2"><button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#listadoModal" id="btn_buscar_taller">Buscar Taller</button></div></div>
+            </div>
+          </div>
+
+        </div>
+      </form>
+    </main>
+
+    <!-- ==================== PANEL: LISTADO MODAL =================== -->
+    <div class="modal fade" id="listadoModal" tabindex="-1" aria-labelledby="listadoModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="listadoModalLabel">Listado De Tallers</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <!-- ========= BOTONES MODAL ========= -->
+            <div class="row">
+              <div class="col-md-4  my-1"><div class="d-grid gap-2"><input type="text" class="form-control form-control-sm" id="valor_lista_modal"></div></div>
+              <div class="col-md-5  my-1"><div class="d-grid gap-2">
+                <select class="form-select form-select-sm" id="filtro_tabla-modal">
+                  <option value="id">ID Taller</option>
+                  <option selected value="titulo">Título</option>
+                </select>
+              </div></div>
+              <div class="col-md-3  my-1"><div class="d-grid gap-2"><button type="button" class="btn btn-sm btn-primary" id="btn_filtrar_tabla_modal">Buscar</button></div></div>
+            </div>
+            <!-- ========== TABLA MODAL =========== -->
+            <div class="col-md-12 my-2">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="col">#</th>
+                      <th class="col">Título</th>
+                      <th class="col">F. Inicio</th>
+                      <th class="col">F. Cierre</th>
+                      <th class="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="contenidoTablaModal"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="col-12">
+              <div class="col-4 offset-4 my-1"><div class="d-grid gap-2"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+
+      var mensajeDeRespuesta; 
+      var operacion = "insertar";
+      var taller_id_seleccionado = 999999999999999;
+
+      $("#btn_nuevo_taller").click( () => {
+        resetear('todo'); 
+      });
+
+      $("#btn_guardar_taller").click( (e) => {
+        $("#formulario").validate({submitHandler: function(form) { 
+          let mensaje = (operacion === 'insertar') ? 'guardar el nuevo registro' : 'guardar los cambios realizados' ;
+          if (mensajeDeRespuesta == 'clase' || confirmarMSJ(mensaje) === true){
+            let formulario = new FormData();
+            formulario.append('id', taller_id_seleccionado);
+            formulario.append('titulo', $("#titulo_taller").val());
+            formulario.append('dia_horario', $("#dia_horario").val());
+            formulario.append('fecha_inicio', $("#fecha_inicio").val());
+            formulario.append('fecha_cierre', $("#fecha_cierre").val());
+            formulario.append('carga_horaria', $("#carga_horaria").val());
+            formulario.append('cupo_max', $("#cupo_max").val());
+            formulario.append('cupo_actual', $("#cupo_actual").val());
+            formulario.append('estado', $("#estado").val());
+            $.ajax({
+              method: "POST",
+              dataType: 'JSON',
+              url: '/controlador/c_taller.php/?operacion=' + operacion,
+              data: formulario,
+              contentType: false,
+              processData: false
+            }).done( (res) => { 
+              mensajeDeRespuesta = res.mensaje;
+              taller_id_seleccionado = res.id;
+              $("#cupo_actual").val(res.cupo_actual);
+              $("#carga_horaria").val(res.carga_horaria);
+            }).then( (res) => {
+              alert(mensajeDeRespuesta); //Importante: Respetar el orden en el hilo de ejecución
+              if (res.estado) { operacion = ('actualizar'); } //Importante: Respetar el orden en el hilo de ejecución
+            });
+          }
+        }});
+      });
+
+      $("#btn_buscar_taller").click( () => {
+        $('#contenidoTablaModal').empty();
+      });
+
+      function obtenerTaller(id){
+          resetear('todo');
+          $.ajax({
+              method: 'GET',
+              dataType: 'JSON',
+              url: '/controlador/c_taller.php/?operacion=obtener&id=' + id
+          }).done( (res) => { 
+              operacion = 'actualizar';
+              taller_id_seleccionado = res.id;
+              $("#titulo_taller").val(res.titulo);
+              $("#dia_horario").val(res.dia_horario);
+              $("#fecha_inicio").val(res.fecha_inicio);
+              $("#fecha_cierre").val(res.fecha_cierre);
+              $("#carga_horaria").val(res.carga_horaria);
+              $("#cupo_max").val(res.cupo_max);
+              $("#cupo_actual").val(res.cupo_actual);
+              $("#estado").val(res.estado);
+              listarClase('taller_id', id); 
+          });
+      }
+
+      $("#btn_agregar_clase").click( () => {
+          if(taller_id_seleccionado != 999999999999999){
+              if (operacion == 'insertar' || operacion == 'actualizar') {
+                  let id_tmp = Math.floor(Math.random() * 999999999999999);
+                  $('#contenidoTablaClase').append( 
+                      '<tr id="' + id_tmp + '">' +
+                          '<th scope="row"><p class="text-sm-center pt-1" id="clase_id' + id_tmp + '">N</th>' +
+                          '<td><input type="text" class="form-control form-control-sm" id="clase_titulo' + id_tmp + '" value="" maxlength="30" required style="width: 350px;"></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="clase_numero' + id_tmp + '" value="" min="1" max="250" required style="width: 80px;"></td>' +
+                          '<td><input type="date" class="form-control form-control-sm" id="clase_fecha' + id_tmp + '" value="' + fechaActual() + '" required style="width: 165px;"></td>' +
+                          '<td><input type="time" class="form-control form-control-sm" id="clase_horario' + id_tmp + '" value="' + horaActual() + '" required style="width: 110px;"></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="clase_duracion' + id_tmp + '" value="60" min="15" max="240" required style="width: 80px;"></td>' +
+                          '<td>' + 
+                              '<select class="form-select form-select-sm" id="clase_estado' + id_tmp + '" style="width: 150px;">' +
+                                  '<option value="DICTADO">DICTADO</option>' +
+                                  '<option selected value="PENDIENTE">PENDIENTE</option>' +
+                              '</select>' +
+                          '</td>' +
+                          '<td class="btn-group">' +
+                              '<button type="button" class="btn btn-sm btn-dark" id="btnGuardar' + id_tmp + '" onclick="guardarClase(\'insertar\', ' + id_tmp + ');">Guardar</button>' +
+                              '<button type="button" class="btn btn-sm btn-danger" id="btnQuitar' + id_tmp + '" onclick="quitarClase(' + id_tmp + ');">Quitar</button>' +
+                          '</td>' +
+                      '</tr>');
+              }
+          }else{ alert('El taller debe estar previamente cargado en el sistema para agregar sus clases.'); }
+      });
+      
+      function quitarClase(id){
+          if (id > 99999999999999) {
+              $('#' + id).remove();                   
+          }else{
+              if (confirmarMSJ('eliminar el registro?') === true){
+                  $.ajax({
+                      method: "POST",
+                      dataType: 'JSON',
+                      url: '/controlador/c_clase.php/?operacion=eliminar',
+                      data: { 'id' : $("#clase_id" + id).text(), }
+                  }).done( (res) => { 
+                      $('#' + id).remove();                   
+                      alert(res.estado);
+                  });
+              } 
+          }
+      }
+
+      function guardarClase(operacion, id){
+          let mensaje = (operacion === 'insertar') ? 'guardar el nuevo registro' : 'guardar los cambios realizados' ;
+          if (confirmarMSJ(mensaje) === true){
+              $.ajax({
+                  method: "POST",
+                  dataType: 'JSON',
+                  url: '/controlador/c_clase.php/?operacion=' + operacion,
+                  data: { 
+                      'id' : id,
+                      'taller_id' : taller_id_seleccionado,
+                      "titulo" : $("#clase_titulo" + id).val(),
+                      "numero" : $("#clase_numero" + id).val(),
+                      "fecha" : $("#clase_fecha" + id).val(),
+                      "horario" : $("#clase_horario" + id).val(),
+                      "duracion" : $("#clase_duracion" + id).val(),
+                      "estado" : $("#clase_estado" + id).val() }
+              }).done( (res) => { 
+                  mensajeDeRespuesta = res.estado;
+                  $('#' + id).attr("id", res.id);
+                  $('#clase_id' + id).attr("id", "clase_id" + res.id).text(res.id);
+                  $('#clase_titulo' + id).attr("id", "clase_titulo" + res.id);
+                  $('#clase_numero' + id).attr("id", "clase_numero" + res.id);
+                  $('#clase_fecha' + id).attr("id", "clase_fecha" + res.id);
+                  $('#clase_horario' + id).attr("id", "clase_horario" + res.id);
+                  $('#clase_duracion' + id).attr("id", "clase_duracion" + res.id);
+                  $('#clase_estado' + id).attr("id", "clase_estado" + res.id);
+                  $('#btnGuardar' + id).attr("id", "btnGuardar" + res.id).attr("onclick", "guardarClase('actualizar' ," + res.id + ");");
+                  $('#btnQuitar' + id).attr("id", "btnQuitar" + res.id).attr("onclick", "quitarClase(" + res.id + ");");
+              }).then( ()=> {
+                  mensajeDeRespuesta = 'clase';
+                  $("#btn_guardar_taller").click();
+              });
+          }
+      }
+
+      function listarClase(filtro, valor) {
+          resetear('clase');
+          $.ajax({
+              method: 'GET',
+              dataType: 'JSON',
+              url: '/controlador/c_clase.php/?operacion=listar&filtro=' + filtro + '&valor=' + valor,
+          }).done( (res) => {
+              for (let i = 0; i < res.length; i++) {
+                  $('#contenidoTablaClase').append( 
+                      '<tr id="' + res[i].id + '">' +
+                          '<th scope="row"><p class="text-sm-center pt-1" id="clase_id' + res[i].id + '">' + res[i].id + '</p></th>' +
+                          '<td><input type="text" class="form-control form-control-sm" id="clase_titulo' + res[i].id + '" value="' + res[i].titulo + '" maxlength="30" required style="width: 350px;"></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="clase_numero' + res[i].id + '" value="' + res[i].numero + '" min="1" max="250" required style="width: 80px;"></td>' +
+                          '<td><input type="date" class="form-control form-control-sm" id="clase_fecha' + res[i].id + '" value="' + res[i].fecha + '" required style="width: 165px;"></td>' +
+                          '<td><input type="time" class="form-control form-control-sm" id="clase_horario' + res[i].id + '" value="' + res[i].horario + '" required style="width: 110px;"></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="clase_duracion' + res[i].id + '" value="' + res[i].duracion + '" min="15" max="240" required style="width: 80px;"></td>' +
+                          '<td>' + 
+                              '<select class="form-select form-select-sm" id="clase_estado' + res[i].id + '" style="width: 150px;">' +
+                                  '<option ' + ((res[i].estado ==='DICTADO') ? "selected":"") + ' value="DICTADO">DICTADO</option>' +
+                                  '<option ' + ((res[i].estado ==='PENDIENTE') ? "selected":"") + ' value="PENDIENTE">PENDIENTE</option>' +
+                              '</select>' +
+                          '</td>' +
+                          '<td class="btn-group">' +
+                              '<button type="button" class="btn btn-sm btn-dark" id="btnGuardar' + res[i].id + '" onclick="guardarClase(\'actualizar\', ' + res[i].id + ');">Guardar</button>' +
+                              '<button type="button" class="btn btn-sm btn-danger" id="btnQuitar' + res[i].id + '" onclick="quitarClase(' + res[i].id +');">Quitar</button>' +
+                          '</td>' +
+                      '</tr>');
+              }
+          });               
+      }
+
+      function resetear(seccion){
+        if(seccion == 'taller' || seccion == 'todo'){
+          operacion = 'insertar';
+          taller_id_seleccionado = 999999999999999;
+          $("#titulo_taller").val('');
+          $("#dia_horario").val('');
+          $("#fecha_inicio").val('');
+          $("#fecha_cierre").val('');
+          $("#carga_horaria").val('0');
+          $("#cupo_max").val('');
+          $("#cupo_actual").val('0');
+          $("#estado").val('PENDIENTE');
+        }
+        if(seccion == 'clase' || seccion == 'todo'){
+          $('#contenidoTablaClase').empty();
+        } 
+      }
+
+      function confirmarMSJ(mensaje){
+          return confirm('¿Está seguro que quiere ' + mensaje);
+      }
+      
+      $('#btn_filtrar_tabla_modal').click( (e) => {
+          $('#contenidoTablaModal').empty();
+          let filtro = $("#filtro_tabla-modal").val(), valor = $("#valor_lista_modal").val();
+          $.ajax({
+              method: 'GET',
+              dataType: 'JSON',
+              url: '/controlador/c_taller.php/?operacion=listar&filtro=' + filtro + '&valor=' + valor,
+          }).done( (res) => {
+              for (let i = 0; i < res.length; i++) {
+                  $('#contenidoTablaModal').append( 
+                      '<tr id="' + res[i].id + '">' +
+                          '<th><p class="text-sm-center fw-light lh-1" id="filtroLista_id' + res[i].id + '">' + res[i].id + '</p></th>' +
+                          '<td><p class="text-sm-center fw-light lh-1" id="filtroLista_titulo' + res[i].id + '">' + res[i].titulo + '</p></td>' +
+                          '<td><p class="text-sm-center fw-light lh-1" id="filtroLista_fecha_inicio' + res[i].id + '">' + res[i].fecha_inicio + '</p></td>' +
+                          '<td><p class="text-sm-center fw-light lh-1" id="filtroLista_fecha_cierre' + res[i].id + '">' + res[i].fecha_cierre + '</p></td>' +
+                          '<td class="btn-group">' +
+                              '<button type="button" class="btn btn-sm btn-dark" id="filtroLista_boton' + res[i].id + '" data-bs-dismiss="modal" onclick="obtenerTaller(' + res[i].id + ');">Obtener</button>' +
+                          '</td>' +
+                      '</tr>');
+              }
+          });               
+      });
+
+  </script>

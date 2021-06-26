@@ -1,0 +1,15 @@
+{
+    "name": "sergio/tfg-siglo21-sergio-regalado",
+    "description": "TFG - Universidad Siglo 21 - Sergio Regalado Alessi",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergio Regalado Alessi",
+            "email": "serdigital@live.com.ar"
+        }
+    ],
+    "require": {
+        "mercadopago/dx-php": "^2.3"
+    }
+}

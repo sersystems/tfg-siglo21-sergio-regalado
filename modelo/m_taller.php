@@ -59,7 +59,7 @@ class Taller{
         }
 	}
 
-    private function actualizarCupo($id) : void
+    public function actualizarCupo($id) : void
 	{
         if($id > 0){
             $datos = DataBase::sentenciar("SELECT (count(*)) AS cupo FROM taller t 
@@ -133,7 +133,7 @@ class Taller{
         return $this;
     }
 
-    public function crearMatriz(Taller $taller)
+    public function crearMatriz(Taller $taller) : array
     {
         return array( 
             'id' => $taller->id,

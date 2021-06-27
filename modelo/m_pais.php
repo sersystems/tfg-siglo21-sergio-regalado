@@ -65,7 +65,7 @@ class Pais{
         return $this;
     }
 
-    public function crearMatriz(Pais $pais)
+    public function crearMatriz(Pais $pais) : array
     {
         return array( 
             'id' => $pais->id,

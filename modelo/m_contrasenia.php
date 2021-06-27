@@ -79,7 +79,7 @@ class Contrasenia{
         return $this;
     }
 
-    public function crearMatriz(Contrasenia $contrasenia)
+    public function crearMatriz(Contrasenia $contrasenia) : array
     {
         return array( 
             'id' => $contrasenia->id,

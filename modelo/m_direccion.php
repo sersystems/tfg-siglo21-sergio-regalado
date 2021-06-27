@@ -101,7 +101,7 @@ class Direccion{
         return $this;
     }
 
-    public function crearMatriz(Direccion $direccion)
+    public function crearMatriz(Direccion $direccion) : array
     {
         return array( 
             'id' => $direccion->id,

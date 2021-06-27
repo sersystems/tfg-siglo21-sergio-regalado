@@ -106,7 +106,7 @@ class Inscripcion{
         return $this;
     }
 
-    public function crearMatriz(Inscripcion $inscripcion)
+    public function crearMatriz(Inscripcion $inscripcion) : array
     {
         return array( 
             'id' => $inscripcion->id,

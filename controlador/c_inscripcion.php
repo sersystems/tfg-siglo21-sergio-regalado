@@ -19,10 +19,11 @@
 
     if (isset($_GET['operacion']) && ($_GET['operacion'] == 'insertar' || $_GET['operacion'] == 'actualizar')) {
         $respuesta = array('id' => '', 'estado' => false, 'mensaje' => 'El ID del registro es incorrecto.');
+        $taller = new Taller();
         $inscripcion = new Inscripcion(
             $_POST['id'],
             (new Usuario())->obtener($_POST['usuario_id']),
-            (new Taller())->obtener($_POST['taller_id']),
+            $taller->obtener($_POST['taller_id']),
             $_POST['fecha_inscripcion'],
             $_POST['asistencia_final'],
             $_POST['calificacion_final'],
@@ -36,6 +37,7 @@
                     $respuesta['id'] = $inscripcion->getId();
                     $respuesta['estado'] = true;
                     $respuesta['mensaje'] = 'Los datos se registraron satisfactoriamente.';
+                    $taller->actualizarCupo($_POST['taller_id']);
                 }else{ $respuesta['mensaje'] = 'No se registró la solicitud porque ya tienes una inscripción en este taller. '; }
             }else{ $respuesta['mensaje'] = 'Se alcanzó el límite máximo de inscripciones simultaneas.'; }
         }else{
@@ -43,6 +45,7 @@
             $respuesta['id'] = $inscripcion->getId();
             $respuesta['estado'] = true;
             $respuesta['mensaje'] = 'Los datos se registraron satisfactoriamente.';
+            $taller->actualizarCupo($_POST['taller_id']);
         }
         echo json_encode($respuesta);
 	}

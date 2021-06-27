@@ -58,7 +58,7 @@ class Diploma{
         return $this;
     }
 
-    public function crearMatriz(Diploma $diploma)
+    public function crearMatriz(Diploma $diploma) : array
     {
         return array( 
             'id' => $diploma->id,

@@ -119,7 +119,7 @@ class Usuario{
         return $this;
     }
 
-    public function crearMatriz(Usuario $usuario)
+    public function crearMatriz(Usuario $usuario) : array
     {
         return array( 
             'id' => $usuario->id,

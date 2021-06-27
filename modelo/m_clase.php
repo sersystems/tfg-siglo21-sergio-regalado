@@ -96,7 +96,7 @@ class Clase{
         return $this;
     }
 
-    public function crearMatriz(Clase $clase)
+    public function crearMatriz(Clase $clase) : array
     {
         return array( 
             'id' => $clase->id,

@@ -33,14 +33,14 @@
         </div>
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item"><a class="nav-link" href="#" id="menu_1" <?php echo (isset($_SESSION['ROL']) && $_SESSION['ROL'] != 'ADMINISTRADOR')? '':'disabled hidden';?>><i class="bi bi-wrench"></i> Mis Talleres</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" id="menu_1" <?php echo (isset($_SESSION['ROL']) && $_SESSION['ROL'] != 'ADMINISTRADOR')? '':'disabled hidden';?>><i class="bi bi-person"></i> Mi Usuario</a></li>
             <li class="nav-item"><a class="nav-link" href="#" id="menu_2" <?php echo (isset($_SESSION['ROL']) && $_SESSION['ROL'] != 'ADMINISTRADOR')? '':'disabled hidden';?>><i class="bi bi-credit-card-2-front"></i> Mis Suscripciones</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" id="menu_3" <?php echo (isset($_SESSION['ROL']) && $_SESSION['ROL'] != 'ADMINISTRADOR')? '':'disabled hidden';?>><i class="bi bi-person"></i> Mi Usuario</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" id="menu_3" <?php echo (isset($_SESSION['ROL']) && $_SESSION['ROL'] != 'ADMINISTRADOR')? '':'disabled hidden';?>><i class="bi bi-wrench"></i> Mis Talleres</a></li>
             <li class="nav-item"><a class="nav-link" href="#" id="menu_4" <?php echo (isset($_SESSION['ROL']) && $_SESSION['ROL'] != 'ADMINISTRADOR')? '':'disabled hidden';?>><i class="bi bi-upc-scan"></i> Mi Código QR</a></li>
             <li class="nav-item"><a class="nav-link" href="#" id="menu_5" <?php echo (isset($_SESSION['ROL']) && $_SESSION['ROL'] == 'ADMINISTRADOR')? '':'disabled hidden';?>><i class="bi bi-building"></i> Institución</a></li>
             <li class="nav-item"><a class="nav-link" href="#" id="menu_6" <?php echo (isset($_SESSION['ROL']) && $_SESSION['ROL'] == 'ADMINISTRADOR')? '':'disabled hidden';?>><i class="bi bi-person"></i> Usuarios</a></li>
             <li class="nav-item"><a class="nav-link" href="#" id="menu_7" <?php echo (isset($_SESSION['ROL']) && $_SESSION['ROL'] == 'ADMINISTRADOR')? '':'disabled hidden';?>><i class="bi bi-wrench"></i> Talleres</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" id="menu_8" <?php echo (isset($_SESSION['ROL']) && $_SESSION['ROL'] == 'ADMINISTRADOR')? '':'disabled hidden';?>><i class="bi bi-receipt"></i> Inscripciones</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" id="menu_8" <?php echo (isset($_SESSION['ROL']) && ($_SESSION['ROL'] == 'ADMINISTRADOR' || $_SESSION['ROL'] == 'DOCENTE'))? '':'disabled hidden';?>><i class="bi bi-receipt"></i> Inscripciones</a></li>
             <li class="nav-item"><a class="nav-link" href="#" id="menu_9" <?php echo (isset($_SESSION['ROL']) && $_SESSION['ROL'] == 'ADMINISTRADOR')? '':'disabled hidden';?>><i class="bi bi-door-open"></i> Control De Acceso</a></li>
             <li class="nav-item"><a class="nav-link" href="#" id="menu_10" <?php echo (isset($_SESSION['ROL']) && $_SESSION['ROL'] == 'ADMINISTRADOR')? '':'disabled hidden';?>><i class="bi bi-wallet-fill"></i> Copias De Seguridad</a></li>
             <li><hr class="dropdown-divider text-white"></li>
@@ -118,9 +118,9 @@
         dibujarCaptcha(captchaGenerada);
         
         $('#menu_0').click( (e) => { location.reload(); });
-        $('#menu_1').click( (e) => { direccionarMenu('v_user_inscripcion.phtml', 1); });
+        $('#menu_1').click( (e) => { direccionarMenu('v_user_usuario.phtml', 1); });
         $('#menu_2').click( (e) => { direccionarMenu('v_user_suscripcion.phtml', 2); });
-        $('#menu_3').click( (e) => { direccionarMenu('v_user_usuario.phtml', 3); });
+        $('#menu_3').click( (e) => { direccionarMenu('v_user_inscripcion.phtml', 3); });
         $('#menu_4').click( (e) => { direccionarMenu('v_user_codigoQR.phtml', 4); });
         $('#menu_5').click( (e) => { direccionarMenu('v_admin_institucion.phtml', 5); });
         $('#menu_6').click( (e) => { direccionarMenu('v_admin_usuario.phtml', 6); });

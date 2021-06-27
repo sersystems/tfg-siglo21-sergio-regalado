@@ -90,7 +90,7 @@ class Suscripcion{
         return $this;
     }
 
-    public function crearMatriz(Suscripcion $suscripcion)
+    public function crearMatriz(Suscripcion $suscripcion) : array
     {
         return array( 
             'id' => $suscripcion->id,

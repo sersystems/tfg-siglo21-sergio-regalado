@@ -91,7 +91,7 @@ class Telefono{
         return $this;
     }
 
-    public function crearMatriz(Telefono $telefono)
+    public function crearMatriz(Telefono $telefono) : array
     {
         return array( 
             'id' => $telefono->id,

@@ -19,7 +19,7 @@
             <input type="number" class="form-control form-control-sm" name="cuit" id="cuit" minlength="11" maxlength="11" required>
           </div>
 
-          <div class="col-md-2">
+          <div class="col-md-4">
             <label for="responsable_tipo" class="form-label">responsable_tipo</label>
             <select class="form-select form-select-sm" name="responsable_tipo" id="responsable_tipo" required>
               <option value="MONOTRIBUTISTA SOCIAL">MONOTRIBUTISTA SOCIAL</option>
@@ -30,17 +30,17 @@
             </select>
           </div>
 
-          <div class="col-md-5 col-lg-4">
+          <div class="col-md-3">
             <label for="fecha_contrato_social" class="form-label">Contrato Social</label>
             <input type="date" class="form-control form-control-sm" name="fecha_contrato_social" id="fecha_contrato_social" value="2021-06-01" required>
           </div>
 
-          <div class="col-md-3">
+          <div class="col-md-4">
             <label for="registro_conabip" class="form-label">Registro CONABIP</label>
             <input type="number" class="form-control form-control-sm" name="registro_conabip" id="registro_conabip" maxlength="4" required>
           </div>
 
-          <div class="col-md-7 col-lg-8">
+          <div class="col-md-8 col-lg-8">
             <label for="correo_electronico" class="form-label">Correo Electrónico</label>
             <input type="email" class="form-control form-control-sm" name="correo_electronico" id="correo_electronico" maxlength="70" required>
           </div>
@@ -276,12 +276,12 @@
                       '<tr id="' + id_tmp + '">' +
                           '<th scope="row"><p class="text-sm-center pt-1" id="telefono_id' + id_tmp + '">N</th>' +
                           '<td>' + 
-                              '<select class="form-select form-select-sm" id="telefono_tipo' + id_tmp + '" style="width: 160px;">' +
+                              '<select class="form-select form-select-sm" id="telefono_tipo' + id_tmp + '" style="width: 200px;">' +
                                   '<option value="TELEFONO FIJO">TELEFONO FIJO</option>' +
-                                  '<option selected value="TELEFONO MOVIL">TELEFONO MOVIL</option>' +                            '</select>' +
+                                  '<option selected value="TELEFONO MOVIL">TELEFONO MOVIL</option>' + '</select>' +
                           '</td>' +
-                          '<td><input type="number" class="form-control form-control-sm" id="telefono_prefijo' + id_tmp + '" value="264" maxlength="5" required></td>' +
-                          '<td><input type="number" class="form-control form-control-sm" id="telefono_numero' + id_tmp + '" value="" maxlength="9" required></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="telefono_prefijo' + id_tmp + '" value="264" max="99999" required style="width: 80px;"></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="telefono_numero' + id_tmp + '" value="" max="999999999" required style="width: 120px;"></td>' +
                           '<td class="btn-group">' +
                               '<button type="button" class="btn btn-sm btn-dark" id="btnGuardar' + id_tmp + '" onclick="guardarTelefono(\'insertar\', ' + id_tmp + ');">Guardar</button>' +
                               '<button type="button" class="btn btn-sm btn-danger" id="btnQuitar' + id_tmp + '" onclick="quitarTelefono(' + id_tmp + ');">Quitar</button>' +
@@ -349,13 +349,13 @@
                       '<tr id="' + res[i].id + '">' +
                           '<th scope="row"><p class="text-sm-center pt-1" id="telefono_id' + res[i].id + '">' + res[i].id + '</p></th>' +
                           '<td>' + 
-                              '<select class="form-select form-select-sm" id="telefono_tipo' + res[i].id + '" style="width: 160px;">' +
+                              '<select class="form-select form-select-sm" id="telefono_tipo' + res[i].id + '" style="width: 200px;">' +
                                   '<option ' + ((res[i].tipo ==='TELEFONO FIJO') ? "selected":"") + ' value="TELEFONO FIJO">TELEFONO FIJO</option>' +
                                   '<option ' + ((res[i].tipo ==='TELEFONO MOVIL') ? "selected":"") + ' value="TELEFONO MOVIL">TELEFONO MOVIL</option>' +
                               '</select>' +
                           '</td>' +
-                          '<td><input type="number" class="form-control form-control-sm" id="telefono_prefijo' + res[i].id + '" value="' + res[i].prefijo + '" maxlength="5" required></td>' +
-                          '<td><input type="number" class="form-control form-control-sm" id="telefono_numero' + res[i].id + '" value="' + res[i].numero + '" maxlength="9" required></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="telefono_prefijo' + res[i].id + '" value="' + res[i].prefijo + '" max="99999" required style="width: 80px;"></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="telefono_numero' + res[i].id + '" value="' + res[i].numero + '" max="999999999" required style="width: 120px;"></td>' +
                           '<td class="btn-group">' +
                               '<button type="button" class="btn btn-sm btn-dark" id="btnGuardar' + res[i].id + '" onclick="guardarTelefono(\'actualizar\', ' + res[i].id + ');">Guardar</button>' +
                               '<button type="button" class="btn btn-sm btn-danger" id="btnQuitar' + res[i].id + '" onclick="quitarTelefono(' + res[i].id +');">Quitar</button>' +

@@ -330,12 +330,12 @@
                       '<tr id="' + id_tmp + '">' +
                           '<th scope="row"><p class="text-sm-center pt-1" id="telefono_id' + id_tmp + '">N</th>' +
                           '<td>' + 
-                              '<select class="form-select form-select-sm" id="telefono_tipo' + id_tmp + '" style="width: 160px;">' +
+                              '<select class="form-select form-select-sm" id="telefono_tipo' + id_tmp + '" style="width: 200px;">' +
                                   '<option value="TELEFONO FIJO">TELEFONO FIJO</option>' +
                                   '<option selected value="TELEFONO MOVIL">TELEFONO MOVIL</option>' +                            '</select>' +
                           '</td>' +
-                          '<td><input type="number" class="form-control form-control-sm" id="telefono_prefijo' + id_tmp + '" value="264" maxlength="5" required></td>' +
-                          '<td><input type="number" class="form-control form-control-sm" id="telefono_numero' + id_tmp + '" value="" maxlength="9" required></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="telefono_prefijo' + id_tmp + '" value="264" max="99999" required style="width: 80px;"></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="telefono_numero' + id_tmp + '" value="" max="999999999" required style="width: 120px;"></td>' +
                           '<td class="btn-group">' +
                               '<button type="button" class="btn btn-sm btn-dark" id="btnGuardar' + id_tmp + '" onclick="guardarTelefono(\'insertar\', ' + id_tmp + ');">Guardar</button>' +
                               '<button type="button" class="btn btn-sm btn-danger" id="btnQuitar' + id_tmp + '" onclick="quitarTelefono(' + id_tmp + ');">Quitar</button>' +
@@ -403,13 +403,13 @@
                       '<tr id="' + res[i].id + '">' +
                           '<th scope="row"><p class="text-sm-center pt-1" id="telefono_id' + res[i].id + '">' + res[i].id + '</p></th>' +
                           '<td>' + 
-                              '<select class="form-select form-select-sm" id="telefono_tipo' + res[i].id + '" style="width: 160px;">' +
+                              '<select class="form-select form-select-sm" id="telefono_tipo' + res[i].id + '" style="width: 200px;">' +
                                   '<option ' + ((res[i].tipo ==='TELEFONO FIJO') ? "selected":"") + ' value="TELEFONO FIJO">TELEFONO FIJO</option>' +
                                   '<option ' + ((res[i].tipo ==='TELEFONO MOVIL') ? "selected":"") + ' value="TELEFONO MOVIL">TELEFONO MOVIL</option>' +
                               '</select>' +
                           '</td>' +
-                          '<td><input type="number" class="form-control form-control-sm" id="telefono_prefijo' + res[i].id + '" value="' + res[i].prefijo + '" maxlength="5" required></td>' +
-                          '<td><input type="number" class="form-control form-control-sm" id="telefono_numero' + res[i].id + '" value="' + res[i].numero + '" maxlength="9" required></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="telefono_prefijo' + res[i].id + '" value="' + res[i].prefijo + '" max="99999" required style="width: 80px;"></td>' +
+                          '<td><input type="number" class="form-control form-control-sm" id="telefono_numero' + res[i].id + '" value="' + res[i].numero + '" max="999999999" required style="width: 120px;"></td>' +
                           '<td class="btn-group">' +
                               '<button type="button" class="btn btn-sm btn-dark" id="btnGuardar' + res[i].id + '" onclick="guardarTelefono(\'actualizar\', ' + res[i].id + ');">Guardar</button>' +
                               '<button type="button" class="btn btn-sm btn-danger" id="btnQuitar' + res[i].id + '" onclick="quitarTelefono(' + res[i].id +');">Quitar</button>' +

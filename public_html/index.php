@@ -74,6 +74,16 @@
               <input type="password" class="form-control form-control-sm" id="contrasenia" minlength="8" maxlength="12" required>
           </div>
 
+          <div class="col-md-4 offset-md-4">
+              <label for="codigo_captcha" class="form-label">Código Captcha</label>
+              <div class="input-group mb-3">
+                  <div class="input-group-prepend border border-1 me-2">
+                    <canvas class="img-fluid pt-1 px-2" id="canvas" width="110" height="22"><img id="laImagen" src="img/img_captcha.jpg"></canvas>
+                  </div>
+                  <input type="text" class="form-control form-control-sm" id="codigo_captcha" minlength="5" maxlength="5" required>
+              </div>
+          </div>
+
           <!-- ============ BOTONES ============ -->
           <div class="col-md-4 offset-md-4 my-3">
               <div class="d-grid gap-2 mb-2"><button type="submit" class="btn btn-sm btn-dark" id="btnAcceder">Acceder</button></div>
@@ -104,6 +114,9 @@
     <script src="js/web3.js"></script>
     <script>$(document).ready( (e) => {
 
+        var captchaGenerada = generarCaptcha();
+        dibujarCaptcha(captchaGenerada);
+        
         $('#menu_0').click( (e) => { location.reload(); });
         $('#menu_1').click( (e) => { direccionarMenu('v_user_inscripcion.phtml', 1); });
         $('#menu_2').click( (e) => { direccionarMenu('v_user_suscripcion.phtml', 2); });
@@ -128,17 +141,21 @@
         });
 
         $('#btnAcceder').click( (e) => {
-          $.ajax({
-              method: "POST",
-              dataType: 'JSON',
-              url: '/controlador/c_usuario.php/?operacion=iniciarSesion',
-              data: { 
-                  'correo_electronico' : $("#correo_electronico").val().trim(),
-                  'contrasenia' : $("#contrasenia").val().trim() }
-          }).done( (res) => { 
-              alert(res.mensaje);
-              if (res.estado) { location.reload(); }
-          });
+          if (validarCaptcha(captchaGenerada, $('#codigo_captcha').val())){
+            $.ajax({
+                method: "POST",
+                dataType: 'JSON',
+                url: '/controlador/c_usuario.php/?operacion=iniciarSesion',
+                data: { 
+                    'correo_electronico' : $("#correo_electronico").val().trim(),
+                    'contrasenia' : $("#contrasenia").val().trim() }
+            }).done( (res) => { 
+                alert(res.mensaje);
+                if (res.estado) { location.reload(); }
+            });
+          }else{
+            e.preventDefault();
+          }
         });
 
         $('#btnRegistrar').click( (e) => {
@@ -220,7 +237,7 @@
             }
           });
         }
-  
+
     });</script>
   </body>
 </html>

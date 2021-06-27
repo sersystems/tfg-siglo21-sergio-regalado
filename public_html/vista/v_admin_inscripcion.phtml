@@ -173,10 +173,10 @@
                     '<p class="text-center pt-1" id="inscripcion_usuario_documento' + res[i].id + '" hidden></p>' + 
                   '</td>' +
                   '<td><p class="text-center pt-1" id="inscripcion_fecha_inscripcion' + res[i].id + '" style="width: 100px;">' + res[i].fecha_inscripcion + '</td>' +
-                  '<td><input type="number" class="form-control form-control-sm" id="inscripcion_asistencia_final' + res[i].id + '" value="' + res[i].asistencia_final + '" max="99.99" maxlength="5" required style="width: 80px;"></td>' +
-                  '<td><input type="number" class="form-control form-control-sm" id="inscripcion_calificacion_final' + res[i].id + '" value="' + res[i].calificacion_final + '" max="99.99" maxlength="5" required style="width: 80px;"></td>' +
+                  '<td><input type="number" class="form-control form-control-sm" id="inscripcion_asistencia_final' + res[i].id + '" value="' + res[i].asistencia_final + '" max="99.99" required style="width: 90px;"></td>' +
+                  '<td><input type="number" class="form-control form-control-sm" id="inscripcion_calificacion_final' + res[i].id + '" value="' + res[i].calificacion_final + '" max="99.99" required style="width: 90px;"></td>' +
                   '<td>' + 
-                    '<select class="form-select form-select-sm" id="inscripcion_situacion_cursada' + res[i].id + '" style="width: 170px;">' +
+                    '<select class="form-select form-select-sm" id="inscripcion_situacion_cursada' + res[i].id + '" style="width: 190px;">' +
                       '<option ' + ((res[i].situacion_cursada ==='APROBADO') ? "selected":"") + ' value="APROBADO">APROBADO</option>' +
                       '<option ' + ((res[i].situacion_cursada ==='DESAPROBADO') ? "selected":"") + ' value="DESAPROBADO">DESAPROBADO</option>' +
                       '<option ' + ((res[i].situacion_cursada ==='EN CURSO') ? "selected":"") + ' value="EN CURSO">EN CURSO</option>' +

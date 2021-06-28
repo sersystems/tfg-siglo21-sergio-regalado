@@ -140,7 +140,7 @@
           });
         });
 
-        $('#btnAcceder').click( (e) => {
+        $('#btnAcceder').click( (submit) => {
           if (validarCaptcha(captchaGenerada, $('#codigo_captcha').val())){
             $.ajax({
                 method: "POST",
@@ -153,19 +153,19 @@
                 alert(res.mensaje);
                 if (res.estado) { location.reload(); }
             });
-          }else{
-            e.preventDefault();
-          }
+          }else{ submit.preventDefault(); }
         });
 
         $('#btnRegistrar').click( (e) => {
-          $.ajax({
-            method: 'GET',
-            url: 'vista/v_user_usuario.phtml',
-          }).done( (res) => {
-            resetearMenu(res);
-            $('#menu_0').addClass('active');
-          }); 
+          if (validarCaptcha(captchaGenerada, $('#codigo_captcha').val())){
+            $.ajax({
+              method: 'GET',
+              url: 'vista/v_user_usuario.phtml',
+            }).done( (res) => {
+              resetearMenu(res);
+              $('#menu_0').addClass('active');
+            }); 
+          }else{ submit.preventDefault(); }
         });
 
         function direccionarMenu(archivoPHP, indice) {

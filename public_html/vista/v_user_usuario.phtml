@@ -151,44 +151,56 @@
       var contrasenia_id_seleccionada = 0;
       var contrasenia_hash_seleccionada = '';
 
-      $("#btn_guardar_usuario").click( (e) => {
+      $("#btn_guardar_usuario").click( (submit) => {
         $("#formulario").validate({submitHandler: function(form) { 
           let mensaje = (operacion === 'insertar') ? 'guardar el nuevo registro' : 'guardar los cambios realizados' ;
           if (confirmarMSJ(mensaje) === true){
-            let formulario = new FormData();
-            formulario.append('id', usuario_id_seleccionado);
-            formulario.append('rol', 'SOCIO');
-            formulario.append('nombre', $("#nombre").val());
-            formulario.append('apellido', $("#apellido").val());
-            formulario.append('documento_tipo_id', $("#documento_tipo_id").val());
-            formulario.append('documento_nro', $("#documento_nro").val());
-            formulario.append('sexo', $("#sexo").val());
-            formulario.append('fecha_nacimiento', $("#fecha_nacimiento").val());
-            formulario.append('correo_electronico', $("#correo_electronico").val());
-            formulario.append('fotografiaSRC', $('#fotografiaSRC').attr('src'));
-            formulario.append('fotografiaFILE', $('#fotografiaFILE')[0].files[0]);
-            formulario.append('estado', 'ACTIVO');
             $.ajax({
                 method: "POST",
                 dataType: 'JSON',
-                url: '/controlador/c_usuario.php/?operacion=' + operacion,
-                data: formulario,
-                contentType: false,
-                processData: false
-            }).done( (res) => { 
-                mensajeDeRespuesta = res.mensaje;
-                usuario_id_seleccionado = res.id;
-                if (res.estado) {
-                    guardarDireccion(); //Importante: Respetar el orden en el hilo de ejecución
-                    guardarUltimaContrasenia(); //Importante: Respetar el orden en el hilo de ejecución
+                url: '/controlador/c_contrasenia.php/?operacion=comprobarContrasenia',
+                data: { 'contrasenia' : $("#contrasenia").val().trim() }
+            }).done( (comprobarContrasenia) => { 
+                if (comprobarContrasenia.estado || ($("#contrasenia").val().length == 0 && $('#tituloPrincipal').html() == 'Mi Usuario')){ 
+                  let formulario = new FormData();
+                  formulario.append('id', usuario_id_seleccionado);
+                  formulario.append('rol', 'SOCIO');
+                  formulario.append('nombre', $("#nombre").val());
+                  formulario.append('apellido', $("#apellido").val());
+                  formulario.append('documento_tipo_id', $("#documento_tipo_id").val());
+                  formulario.append('documento_nro', $("#documento_nro").val());
+                  formulario.append('sexo', $("#sexo").val());
+                  formulario.append('fecha_nacimiento', $("#fecha_nacimiento").val());
+                  formulario.append('correo_electronico', $("#correo_electronico").val());
+                  formulario.append('fotografiaSRC', $('#fotografiaSRC').attr('src'));
+                  formulario.append('fotografiaFILE', $('#fotografiaFILE')[0].files[0]);
+                  formulario.append('estado', 'ACTIVO');
+                  $.ajax({
+                      method: "POST",
+                      dataType: 'JSON',
+                      url: '/controlador/c_usuario.php/?operacion=' + operacion,
+                      data: formulario,
+                      contentType: false,
+                      processData: false
+                  }).done( (res) => { 
+                      mensajeDeRespuesta = res.mensaje;
+                      usuario_id_seleccionado = res.id;
+                      if (res.estado) {
+                          guardarDireccion(); //Importante: Respetar el orden en el hilo de ejecución
+                          guardarUltimaContrasenia(); //Importante: Respetar el orden en el hilo de ejecución
+                      }
+                  }).then( (e) => { 
+                    if ($('#tituloPrincipal').html() != 'Mi Usuario') { accederAlSistema(); }; //Importante: 
+                    alert(mensajeDeRespuesta); //Importante: Respetar el orden en el hilo de ejecución
+                  });
+                }else{ 
+                  submit.preventDefault(); 
+                  alert(comprobarContrasenia.mensaje); 
                 }
-              }).then( (res) => { 
-                if ($('#tituloPrincipal').html() != 'Mi Usuario') { location.reload(); }; //Importante: 
-                alert(mensajeDeRespuesta); //Importante: Respetar el orden en el hilo de ejecución
-              });
+            });
           }
         }});
-      });
+      });  
 
       function obtenerUsuario(id){
           resetear('todo');
@@ -423,6 +435,20 @@
           else $('#fotografiaSRC').attr('src', '');
       });
 
+      function accederAlSistema(){
+        $.ajax({
+            method: "POST",
+            dataType: 'JSON',
+            url: '/controlador/c_usuario.php/?operacion=iniciarSesion',
+            data: { 
+                'correo_electronico' : $("#correo_electronico").val().trim(),
+                'contrasenia' : $("#contrasenia").val().trim() }
+        }).done( (res) => { 
+            alert(res.mensaje);
+            if (res.estado) { location.reload(); }
+        });
+      }
+      
       //Acción: Auto-carga las suscripciones correspondientes al usuario que accedio al sistema 
       $.ajax({
         method: 'GET',

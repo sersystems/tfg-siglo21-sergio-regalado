@@ -19,27 +19,27 @@
 
     if (isset($_GET['operacion']) && ($_GET['operacion'] == 'insertar' || $_GET['operacion'] == 'actualizar')) {
         $respuesta = array('id' => '', 'mensaje' => 'El ID del registro es incorrecto.');
-        $comprobacion = Cfg::comprobarContrasenia($_POST['contrasenia']);
-        if ($comprobacion['estado']) {
-            $contrasenia = new Contrasenia(
-                $_POST['id'],
-                (new Usuario())->obtener($_POST['usuario_id']),
-                Cfg::encriptarContrasenia($_POST['contrasenia'], $_POST['hash_original']),
-                "", //fecha_creacion: Se auto-asignan en la BD.
-                ""  //fecha modificacion: Se auto-asignan en la BD.
-            );
-            if ($_GET['operacion'] == 'insertar'){
-                $contrasenia->insertar();
-                $respuesta['id'] = $contrasenia->getId();
-                $respuesta['mensaje'] = 'Los datos se registraron satisfactoriamente.';
-            }else{
-                $contrasenia->actualizar();
-                $respuesta['id'] = $contrasenia->getId();
-                $respuesta['mensaje'] = 'Los datos se registraron satisfactoriamente.';
-            }
-        }else{ $respuesta['mensaje'] = $comprobacion['causa']; }
+        $contrasenia = new Contrasenia(
+            $_POST['id'],
+            (new Usuario())->obtener($_POST['usuario_id']),
+            Cfg::encriptarContrasenia($_POST['contrasenia'], $_POST['hash_original']),
+            "", //fecha_creacion: Se auto-asignan en la BD.
+            ""  //fecha modificacion: Se auto-asignan en la BD.
+        );
+        if ($_GET['operacion'] == 'insertar'){
+            $contrasenia->insertar();
+            $respuesta['id'] = $contrasenia->getId();
+            $respuesta['mensaje'] = 'Los datos se registraron satisfactoriamente.';
+        }else{
+            $contrasenia->actualizar();
+            $respuesta['id'] = $contrasenia->getId();
+            $respuesta['mensaje'] = 'Los datos se registraron satisfactoriamente.';
+        }
         if (!empty($_POST['contrasenia'])) { echo json_encode($respuesta); }
 	}
 
+    if (isset($_GET['operacion']) && $_GET['operacion'] == 'comprobarContrasenia') {
+        echo json_encode(Cfg::comprobarContrasenia($_POST['contrasenia']));
+	}
 ?>
 

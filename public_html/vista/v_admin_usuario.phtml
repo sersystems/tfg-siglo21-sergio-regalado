@@ -222,43 +222,55 @@
         resetear('todo'); 
       });
 
-      $("#btn_guardar_usuario").click( (e) => {
+      $("#btn_guardar_usuario").click( (submit) => {
         $("#formulario").validate({submitHandler: function(form) { 
           let mensaje = (operacion === 'insertar') ? 'guardar el nuevo registro' : 'guardar los cambios realizados' ;
           if (confirmarMSJ(mensaje) === true){
-            let formulario = new FormData();
-            formulario.append('id', usuario_id_seleccionado);
-            formulario.append('rol', $("#rol").val());
-            formulario.append('nombre', $("#nombre").val());
-            formulario.append('apellido', $("#apellido").val());
-            formulario.append('documento_tipo_id', $("#documento_tipo_id").val());
-            formulario.append('documento_nro', $("#documento_nro").val());
-            formulario.append('sexo', $("#sexo").val());
-            formulario.append('fecha_nacimiento', $("#fecha_nacimiento").val());
-            formulario.append('correo_electronico', $("#correo_electronico").val());
-            formulario.append('fotografiaSRC', $('#fotografiaSRC').attr('src'));
-            formulario.append('fotografiaFILE', $('#fotografiaFILE')[0].files[0]);
-            formulario.append('estado', $("#estado").val());
             $.ajax({
                 method: "POST",
                 dataType: 'JSON',
-                url: '/controlador/c_usuario.php/?operacion=' + operacion,
-                data: formulario,
-                contentType: false,
-                processData: false
-            }).done( (res) => { 
-                mensajeDeRespuesta = res.mensaje;
-                usuario_id_seleccionado = res.id;
-                if (res.estado) {
-                    guardarDireccion(); //Importante: Respetar el orden en el hilo de ejecución
-                    guardarUltimaContrasenia(); //Importante: Respetar el orden en el hilo de ejecución
-                    operacion = ('actualizar'); //Importante: Respetar el orden en el hilo de ejecución
+                url: '/controlador/c_contrasenia.php/?operacion=comprobarContrasenia',
+                data: { 'contrasenia' : $("#contrasenia").val().trim() }
+            }).done( (comprobarContrasenia) => { 
+                if (comprobarContrasenia.estado || $("#contrasenia").val().length == 0){ 
+                  let formulario = new FormData();
+                  formulario.append('id', usuario_id_seleccionado);
+                  formulario.append('rol', $("#rol").val());
+                  formulario.append('nombre', $("#nombre").val());
+                  formulario.append('apellido', $("#apellido").val());
+                  formulario.append('documento_tipo_id', $("#documento_tipo_id").val());
+                  formulario.append('documento_nro', $("#documento_nro").val());
+                  formulario.append('sexo', $("#sexo").val());
+                  formulario.append('fecha_nacimiento', $("#fecha_nacimiento").val());
+                  formulario.append('correo_electronico', $("#correo_electronico").val());
+                  formulario.append('fotografiaSRC', $('#fotografiaSRC').attr('src'));
+                  formulario.append('fotografiaFILE', $('#fotografiaFILE')[0].files[0]);
+                  formulario.append('estado', $("#estado").val());
+                  $.ajax({
+                      method: "POST",
+                      dataType: 'JSON',
+                      url: '/controlador/c_usuario.php/?operacion=' + operacion,
+                      data: formulario,
+                      contentType: false,
+                      processData: false
+                  }).done( (res) => { 
+                    mensajeDeRespuesta = res.mensaje;
+                    usuario_id_seleccionado = res.id;
+                    if (res.estado) {
+                        guardarDireccion(); //Importante: Respetar el orden en el hilo de ejecución
+                        guardarUltimaContrasenia(); //Importante: Respetar el orden en el hilo de ejecución
+                        operacion = ('actualizar'); //Importante: Respetar el orden en el hilo de ejecución
+                    }
+                    alert(mensajeDeRespuesta); //Importante: Respetar el orden en el hilo de ejecución
+                  });
+                }else{ 
+                  submit.preventDefault(); 
+                  alert(comprobarContrasenia.mensaje); 
                 }
-                alert(mensajeDeRespuesta); //Importante: Respetar el orden en el hilo de ejecución
-              });
+            });
           }
         }});
-      });
+      }); 
 
       $("#btn_buscar_usuario").click( () => {
         $('#contenidoTablaModal').empty();

@@ -21,17 +21,17 @@ class Cfg
         $simbolosPermitidos = array('#', '$', '%', '&', '*', '+', '-', '.', '@', '^', '_', '|', '~');              
         if(strlen($contrasenia) >= 8 && strlen($contrasenia) <= 12){
             for ($i=0; $i < strlen($contrasenia); $i++) {
-                for ($n=0; $n < count($numeros); $n++) {if ($contrasenia[$i] == $numeros[$n]) { $verificacion['p1'] = true; }}
-                for ($y=0; $y < count($mayusculas); $y++) {if ($contrasenia[$i] == $mayusculas[$y]) { $verificacion['p2'] = true; }}
-                for ($m=0; $m < count($minusculas); $m++) {if ($contrasenia[$i] == $minusculas[$m]) { $verificacion['p3'] = true; }}
-                for ($p=0; $p < count($simbolosPermitidos); $p++) {if ($contrasenia[$i] == $simbolosPermitidos[$p]) { $verificacion['p4'] = true; }}
+                for ($n=0; $n < count($numeros); $n++) { if ($contrasenia[$i] == $numeros[$n]) { $verificacion['p1'] = true; }}
+                for ($y=0; $y < count($mayusculas); $y++) { if ($contrasenia[$i] == $mayusculas[$y]) { $verificacion['p2'] = true; }}
+                for ($m=0; $m < count($minusculas); $m++) { if ($contrasenia[$i] == $minusculas[$m]) { $verificacion['p3'] = true; }}
+                for ($p=0; $p < count($simbolosPermitidos); $p++) { if ($contrasenia[$i] == $simbolosPermitidos[$p]) { $verificacion['p4'] = true; }}
             }
-            if ($verificacion['p1'] == false) { return array('estado' => false, 'causa' => 'La contraseña debe contener al menos un número.');
-            }elseif($verificacion['p2'] == false) { return array('estado' => false, 'causa' => 'La contraseña debe contener al menos una mayúscula.');
-            }elseif($verificacion['p3'] == false) { return array('estado' => false, 'causa' => 'La contraseña debe contener al menos una minúscula.');
-            }elseif($verificacion['p4'] == false) { return array('estado' => false, 'causa' => 'La contraseña debe contener al menos un símbolo permitido.'); }
-        }else { return array('estado' => false, 'causa' => 'La contraseña debe tener entre 8 a 12 caracteres.'); }
-        return array('estado' => true, 'causa' => 'OK');
+            if ($verificacion['p1'] == false) { return array('estado' => false, 'mensaje' => 'La contraseña debe contener al menos un número.');
+            }elseif($verificacion['p2'] == false) { return array('estado' => false, 'mensaje' => 'La contraseña debe contener al menos una mayúscula.');
+            }elseif($verificacion['p3'] == false) { return array('estado' => false, 'mensaje' => 'La contraseña debe contener al menos una minúscula.');
+            }elseif($verificacion['p4'] == false) { return array('estado' => false, 'mensaje' => 'La contraseña debe contener al menos un símbolo permitido.'); }
+        }else { return array('estado' => false, 'mensaje' => 'La contraseña debe tener entre 8 a 12 caracteres.'); }
+        return array('estado' => true, 'mensaje' => 'OK');
     }
 
     public static function obtenerPublicKeyMP() : string

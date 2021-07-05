@@ -1,0 +1,80 @@
+    <!-- ===================== PANEL: SUBTITULO ====================== -->
+    <div class="row mb-3">
+        <h3 class="text-center" style="text-shadow: 0.04em 0.04em 0.12em gray">Verificación De Diploma</h3>
+    </div>
+
+    <!-- ===================== PANEL: FORMULARIO ===================== -->
+    <main>
+        <form class="was-validated" accept-charset="utf-8" id="formulario">
+            <div class="row g-3">
+
+                <div class="col-md-4 offset-md-4">
+                    <label for="codigo_verificacion" class="form-label">Código de verificación</label>
+                    <input type="text" class="form-control form-control-sm" name="codigo_verificacion" id="codigo_verificacion" minlength="15" maxlength="15" required>
+                </div>
+
+                <div class="col-md-4 offset-md-4">
+                    <label for="codigo_captcha" class="form-label">Código Captcha</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend border border-1 me-2">
+                            <canvas class="img-fluid pt-1 px-2" id="canvas" width="110" height="22"><img id="laImagen" src="img/img_captcha.jpg"></canvas>
+                        </div>
+                        <input type="text" class="form-control form-control-sm" id="codigo_captcha" minlength="5" maxlength="5" required>
+                    </div>
+                </div>
+
+                <!-- ============ BOTONES ============ -->
+                <div class="col-md-4 offset-md-4">
+                    <div class="d-grid gap-2"><button type="button" class="btn btn-sm btn-dark" id="btnVerificar">Verificar Diploma</button></div>
+                </div>
+
+                <!-- ========== RESULTADO ============ -->
+                <div class="col-md-6 offset-md-3">
+                    <div class="row">
+                        <h6 class="lh-sm text-center mt-4"><b id="resultado"></b></h6>
+                        <small class="lh-sm text-center my-3" id="data"></small>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </main>
+
+    <!-- =================== PANEL: IMAGEN LOADING =================== -->
+    <div class="text-center my-3" id="loading" hidden>
+      <img src="img/ajax-loader.gif"><br/>
+      Verificando autenticidad del diploma.<br>
+      El proceso puede tardar varios segundos…
+    </div>
+
+    <script type="text/javascript">
+    
+        var captchaGenerada = generarCaptcha();
+        dibujarCaptcha(captchaGenerada);
+        
+        $("#btnVerificar").click( (e) => {
+            if (validarCaptcha(captchaGenerada, $('#codigo_captcha').val())){
+                $('#loading').attr("hidden", false); //Muestra la leyenda de loading
+                    $.ajax({
+                    method: 'GET',
+                    dataType: 'JSON',
+                    url: '/controlador/c_diploma.php/?operacion=verificar&codigo_verificacion=' + $("#codigo_verificacion").val()
+                }).done( async (res) => {
+                    $('#resultado').html( res.mensaje + '<br>Nro. de bloque: ' + res.bloque_smart_contract + ' (Ethereum)');
+                    await obtenerBlockChain(res.bloque_smart_contract).then( function(diplomaBlockchain){
+                        $('#data').html(
+                            'Apellido y nombre: <b>' + diplomaBlockchain[0] + '</b><br>' +
+                            'Documento: <b>' + diplomaBlockchain[1] + '</b><br>' +
+                            'Taller: <b>' + diplomaBlockchain[2] + '</b><br>' +
+                            'Carga horaria: <b>' + diplomaBlockchain[3] + '</b><br>' +
+                            'Fecha de expedición: <b>' + diplomaBlockchain[4] + '</b><br>');
+                    });
+                }).then( (e) => {
+                    $('#loading').attr("hidden", true); //Oculta la leyenda de loading
+                });
+            }else{
+                e.preventDefault();
+            }
+        });
+
+    </script>

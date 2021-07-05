@@ -118,17 +118,17 @@
         dibujarCaptcha(captchaGenerada);
         
         $('#menu_0').click( (e) => { location.reload(); });
-        $('#menu_1').click( (e) => { direccionarMenu('v_user_usuario.phtml', 1); });
-        $('#menu_2').click( (e) => { direccionarMenu('v_user_suscripcion.phtml', 2); });
-        $('#menu_3').click( (e) => { direccionarMenu('v_user_inscripcion.phtml', 3); });
-        $('#menu_4').click( (e) => { direccionarMenu('v_user_codigoQR.phtml', 4); });
-        $('#menu_5').click( (e) => { direccionarMenu('v_admin_institucion.phtml', 5); });
-        $('#menu_6').click( (e) => { direccionarMenu('v_admin_usuario.phtml', 6); });
-        $('#menu_7').click( (e) => { direccionarMenu('v_admin_taller.phtml', 7); });
-        $('#menu_8').click( (e) => { direccionarMenu('v_admin_inscripcion.phtml', 8); });
-        $('#menu_9').click( (e) => { direccionarMenu('v_admin_controlDeAcceso.phtml', 9); });
-        $('#menu_10').click( (e) => { direccionarMenu('v_admin_copiaSeguridad.phtml', 10); });
-        $('#menu_11').click( (e) => { direccionarMenu('v_admin_verificacionDiploma.phtml', 11); });
+        $('#menu_1').click( (e) => { direccionarMenu('v_miUsuario.phtml', 1); });
+        $('#menu_2').click( (e) => { direccionarMenu('v_misSuscripciones.phtml', 2); });
+        $('#menu_3').click( (e) => { direccionarMenu('v_misTalleres.phtml', 3); });
+        $('#menu_4').click( (e) => { direccionarMenu('v_miCodigoQR.phtml', 4); });
+        $('#menu_5').click( (e) => { direccionarMenu('v_gestionDeInstitucion.phtml', 5); });
+        $('#menu_6').click( (e) => { direccionarMenu('v_gestionDeUsuario.phtml', 6); });
+        $('#menu_7').click( (e) => { direccionarMenu('v_gestionDeTalleres.phtml', 7); });
+        $('#menu_8').click( (e) => { direccionarMenu('v_gestionDeInscripciones.phtml', 8); });
+        $('#menu_9').click( (e) => { direccionarMenu('v_controlDeAcesso.phtml', 9); });
+        $('#menu_10').click( (e) => { direccionarMenu('v_gestionDeCopiasDeSeguridad.phtml', 10); });
+        $('#menu_11').click( (e) => { direccionarMenu('v_verificacionDeDiploma.phtml', 11); });
       
         $('#menu_X').click( (e) => {
           $.ajax({
@@ -160,7 +160,7 @@
           if (validarCaptcha(captchaGenerada, $('#codigo_captcha').val())){
             $.ajax({
               method: 'GET',
-              url: 'vista/v_user_usuario.phtml',
+              url: '/vista/v_miUsuario.phtml',
             }).done( (res) => {
               resetearMenu(res);
               $('#menu_0').addClass('active');
@@ -171,7 +171,7 @@
         function direccionarMenu(archivoPHP, indice) {
           $.ajax({
             method: 'GET',
-            url: 'vista/' + archivoPHP,
+            url: '/vista/' + archivoPHP,
           }).done( (res) => { 
             resetearMenu(res);
             $('#menu_' + indice).addClass('active');

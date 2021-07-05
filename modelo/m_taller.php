@@ -54,7 +54,7 @@ class Taller{
             $datos = DataBase::sentenciar("SELECT SUM(c.duracion) AS carga_horaria FROM taller t 
                 INNER JOIN clase c ON c.taller_id = t.id 
                 WHERE t.id = ".$id.";");
-            $this->carga_horaria = (int)$datos->fetchColumn(0) + 0;
+            $this->carga_horaria = ((int)$datos->fetchColumn(0) + 0) / 60;
             DataBase::sentenciar("UPDATE taller SET carga_horaria = (".$this->carga_horaria.") WHERE taller.id = ".$id.";");
         }
 	}

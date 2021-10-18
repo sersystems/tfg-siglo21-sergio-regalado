@@ -153,7 +153,8 @@
 
       $("#btn_guardar_usuario").click( (submit) => {
         $("#formulario").validate({submitHandler: function(form) { 
-          let mensaje = (operacion === 'insertar') ? 'guardar el nuevo registro' : 'guardar los cambios realizados' ;
+		operacion = (usuario_id_seleccionado === 999999999999999) ?  'insertar' : 'actualizar';  
+		let mensaje = (operacion === 'insertar') ? 'guardar el nuevo registro' : 'guardar los cambios realizados' ;
           if (confirmarMSJ(mensaje) === true){
             $.ajax({
                 method: "POST",

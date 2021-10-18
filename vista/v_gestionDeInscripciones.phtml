@@ -188,7 +188,7 @@
                   '<td><p class="text-center pt-1" id="inscripcion_blockchain' + res[i].id + '">' + ((res[i].diploma.bloque_smart_contract == null) ? '': res[i].diploma.bloque_smart_contract) + '</td>' +
                   '<td class="btn-group">' +
                     '<button type="button" class="btn btn-sm btn-dark" id="btnGuardar' + res[i].id + '" onclick="guardarInscripcion(\'actualizar\', ' + res[i].id + ');">Guardar</button>' +
-                    '<button type="button" class="btn btn-sm btn-primary" id="btnEmitirDiploma' + res[i].id + '" onclick="emitirDiploma(' + res[i].id +');"' + ((res[i].diploma.id == null) ? '':'disabled hidden') + ' style="width: 110px;">Emitir Diploma</button>' +
+                    '<button type="button" class="btn btn-sm btn-primary" id="btnEmitirDiploma' + res[i].id + '" onclick="emitirDiploma(' + res[i].id +');"' + ((res[i].situacion_cursada =='APROBADO') ? ((res[i].diploma.id == null) ? '':'disabled hidden') : 'disabled hidden') + ' style="width: 110px;">Emitir Diploma</button>' +
                     '<button type="button" class="btn btn-sm btn-success" id="btnVerDiploma' + res[i].id + '" onclick="verDiploma(' + res[i].id +');"' + ((res[i].diploma.id == null) ? 'disabled hidden':'') + ' style="width: 110px;">Ver Diploma</button>' +
                   '</td>' +
                 '</tr>' + 
